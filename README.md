@@ -212,7 +212,7 @@ Solo se necesita:
 
 ---
 
-## 🖼 **Capturas (opcional)**
+## 🖼 **Capturas**
 
 Agregar en la presentación:
 
