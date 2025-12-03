@@ -226,7 +226,6 @@ Agregar en la presentación:
 
 ## 👨‍💻 **Autor**
 
-Desarrollado por **Cristian Altamiranda**,  
-como proyecto para la carrera **Técnico Universitario en Tecnologías de Programación**.
+Desarrollado por **Cristian Altamiranda**.
 
 ---
