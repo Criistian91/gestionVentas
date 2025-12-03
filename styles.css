@@ -200,6 +200,44 @@ canvas {
   margin-top: 10px;
 }
 
+/* ---------------------------
+   Login sencillo
+   --------------------------- */
+.login-container {
+  max-width: 360px;
+  margin: 6vh auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  text-align: center;
+}
+.login-container input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+}
+.login-container button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+}
+
+/* dark mode for login */
+body.dark .login-container {
+  background: #242728;
+  color: #eaeaea;
+  border: 1px solid #333;
+}
+
+/* Para impresión: mejorar legibilidad del PDF si exportás secciones HTML */
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  .no-print { display: none !important; }
+}
+
 
 /* ============================================================
    🌙 MODO OSCURO - Dark Theme
