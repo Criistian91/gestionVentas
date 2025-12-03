@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,130 +8,296 @@
 
     <link rel="stylesheet" href="styles.css" />
 
-    <!-- Chart.js SOLO si el index usa gráficos -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
-
-    <!-- NO cargar jsPDF aquí (no se usa en el index) -->
-
-    <!-- Sistema principal -->
+    <!-- Módulo principal del sistema -->
     <script type="module" src="poo/sistema.js"></script>
 </head>
 
 <body>
+    <!-- ==========================================
+               HEADER / CONTROLES PRINCIPALES
+    ============================================ -->
     <header>
         <h1>Sistema de Gestión de Panificados</h1>
-        <section id="panelControles">
+
+        <section id="panelControles" class="header-actions">
+
             <button id="togglePreciosBtn">Mostrar/ocultar precios</button>
+
             <button id="addStockBtn">Agregar nuevo producto</button>
+
             <button onclick="location.href='estadisticas.html'">Ver estadísticas</button>
+
             <button id="exportarPDFBtn">📄 Exportar PDF</button>
-            <button id="cerrarSesionBtn">Cerrar sesión</button>
+
             <button id="cierreDiaBtn">Cierre del día</button>
+
+            <button id="cerrarSesionBtn">Cerrar sesión</button>
+
+            <button id="abrirGuiaBtn">❔ Guía de uso</button>
+
             <button id="toggleThemeBtn">🌙 Modo oscuro</button>
         </section>
     </header>
 
-    <section id="productosSection">
-        <h2>Productos</h2>
-        <div id="productosContainer"></div>
-    </section>
+    <!-- ==========================================
+                     CONTENIDO PRINCIPAL
+    ============================================ -->
+    <main>
 
-    <section id="formularioNuevoProducto" class="panel-form">
-        <h3>Crear nuevo producto</h3>
-        <label>Nombre:
-            <input id="nombreInput" type="text" placeholder="(Nombre del producto)">
-        </label>
-        <label>Precio costo:
-            <input id="precioCostoInput" type="number" step="0.01" placeholder=" (Precio de costo)">
-        </label>
-        <label>Precio venta:
-            <input id="precioVentaInput" type="number" step="0.01" placeholder=" (Precio al público)">
-        </label>
-        <label>Categoría:
-            <select id="categoriaNueva"></select>
-        </label>
-        <label>Agregar categoría:
-            <input id="categoriaAgregar" type="text" placeholder="Nueva categoría + Agregar →">
-            <button id="btnAgregarCategoria">Agregar</button>
-        </label>
-        <label>Stock inicial:
-            <input id="stockInput" type="number" placeholder="Cantidad inicial">
-        </label>
+        <!-- PRODUCTOS -->
+        <section id="productosSection" class="chart-card">
+            <h2>Productos</h2>
+            <div id="productosContainer"></div>
+        </section>
 
-        <label>Mínimo deseado:
-            <input type="number" id="minimoDeseado" placeholder="Cantidad mínima deseada">
-        </label>
-        <!-- <label>Es perecedero:
-            <input id="perecederoInput" type="checkbox">
-        </label>
-        <label>Días hasta vencimiento:
-            <input id="diasVencimientoInput" type="number">
-        </label> -->
+        <!-- CREAR PRODUCTO -->
+        <section id="formularioNuevoProducto" class="panel-form chart-card">
+            <h3>Crear nuevo producto</h3>
 
-        <button id="btnCrearProducto">Crear producto</button>
-    </section>
+            <label>Nombre:
+                <input id="nombreInput" type="text" placeholder="(Nombre del producto)">
+            </label>
 
-    <section id="totalesSection">
-        <h2>Totales</h2>
-        <div id="totalesContainer"></div>
-    </section>
+            <label>Precio costo:
+                <input id="precioCostoInput" type="number" step="0.01" placeholder="(Precio de costo)">
+            </label>
 
-    <!-- <section id="alertasSection">
-        <h2>Alertas de stock</h2>
-        <div id="alertasContainer"></div>
-    </section> -->
+            <label>Precio venta:
+                <input id="precioVentaInput" type="number" step="0.01" placeholder="(Precio al público)">
+            </label>
 
-    <section id="turnosSection">
-        <h2>Configuración de turnos</h2>
-        <label>Mañana inicio:<input type="time" id="inicioManana"></label>
-        <label>Mañana fin:<input type="time" id="finManana"></label>
-        <label>Tarde inicio:<input type="time" id="inicioTarde"></label>
-        <label>Tarde fin:<input type="time" id="finTarde"></label>
-    </section>
+            <label>Categoría:
+                <select id="categoriaNueva"></select>
+            </label>
+
+            <label>Agregar categoría:
+                <input id="categoriaAgregar" type="text" placeholder="Nueva categoría">
+                <button id="btnAgregarCategoria">Agregar</button>
+            </label>
+
+            <label>Stock inicial:
+                <input id="stockInput" type="number" placeholder="Cantidad inicial">
+            </label>
+
+            <label>Mínimo deseado:
+                <input id="minimoDeseado" type="number" placeholder="Cantidad mínima deseada">
+            </label>
+
+            <button id="btnCrearProducto">Crear producto</button>
+        </section>
+
+        <!-- TOTALES -->
+        <section id="totalesSection" class="chart-card">
+            <h2>Totales</h2>
+            <div id="totalesContainer"></div>
+        </section>
+
+        <!-- TURNOS -->
+        <section id="turnosSection" class="chart-card">
+            <h2>Configuración de turnos</h2>
+
+            <label>Mañana inicio:
+                <input type="time" id="inicioManana">
+            </label>
+
+            <label>Mañana fin:
+                <input type="time" id="finManana">
+            </label>
+
+            <label>Tarde inicio:
+                <input type="time" id="inicioTarde">
+            </label>
+
+            <label>Tarde fin:
+                <input type="time" id="finTarde">
+            </label>
+        </section>
+
+    </main>
 
     <footer>
         <p>&copy; 2025 - Cristian Daniel Altamiranda</p>
     </footer>
 
+    <!-- ==========================================
+                    MODAL: GUÍA DE USO
+    ============================================ -->
+
+    <div id="modalGuia" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modalGuiaTitle">
+        <div class="modal-content">
+
+            <button class="modal-close" id="modalGuiaClose" aria-label="Cerrar guía">✖</button>
+
+            <h2 id="modalGuiaTitle">🟦 Guía rápida de uso</h2>
+
+            <div class="modal-body">
+                <pre>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🟦 GUÍA COMPLETA DE USO DEL SISTEMA DE PANIFICADOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌 IMPORTANTE SOBRE EL ALMACENAMIENTO
+Toda la información (productos, ventas, totales, estadísticas y turnos)
+SE GUARDA en el LocalStorage del dispositivo actual.
+
+✔ Esto significa que:
+- Tus datos quedan guardados aunque cierres la página.
+- NO se sincronizan entre dispositivos.
+- Lo que cargues en un teléfono, NO aparecerá en una PC diferente.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+👤 1. INICIO DE SESIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Usuarios disponibles:
+• admin — contraseña: 1234
+• vendedor — contraseña: 1234
+
+Puede:
+✓ Crear productos  
+✓ Editar / Eliminar productos
+✓ Vender productos
+✓ Devolver ventas 
+✓ Ver estadísticas  
+✓ Realizar cierre del día  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 2. CREACIÓN DE PRODUCTOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1) Nombre – costo – venta  
+2) Elegir categoría  
+3) Si NO existe:
+   - Escribirla
+   - Presionar **Agregar categoría**
+   ⚠ ENTER guarda el producto directo  
+4) Stock inicial  
+5) Mínimo deseado (para alertas)  
+6) Crear producto  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📥 3. SUMAR STOCK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Botón “Sumar stock”:
+• Aumenta stock
+• Afecta costo del día
+• Afecta venta esperada del día
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🛒 4. VENTAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Al vender:
+• Baja stock  
+• Sube ingresos  
+• Sube ganancia  
+• Se asigna turno  
+• Actualiza estadísticas  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔄 5. DEVOLUCIONES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Solo del día ACTUAL.  
+Después del cierre: no se pueden devolver.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔔 6. ALERTAS DE STOCK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🟥 Bajo  
+🟨 Cerca del mínimo  
+🟩 Correcto  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 7. ESTADÍSTICAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Incluye:
+• Resumen rápido  
+• Acumulado mensual  
+• Gráficos del día  
+• Gráficos del mes  
+• Top productos  
+• Ventas por categoría  
+• Tablas del día  
+• Historial día por día  
+• Exportaciones CSV / PDF  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📅 8. CIERRE DEL DÍA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Al cerrar:
+✔ Guarda registro inalterable  
+✔ Pone en cero valores del día  
+✔ Mantiene stock  
+✔ Mantiene venta esperada si hay stock  
+✔ Actualiza mes  
+✔ No pasa al día siguiente hasta 23:59  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🌙 9. MODO OSCURO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Automático según hora  
+• Manual  
+• Guarda preferencia  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✔ FIN DE LA GUÍA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+                    SCRIPT: MODO OSCURO
+    ============================================ -->
     <script>
-    // Tema simple (suave) — guarda preferencia
-    document.addEventListener("DOMContentLoaded", () => {
-        const btn = document.getElementById("toggleThemeBtn");
-        document.body.style.transition = "background-color 0.35s ease, color 0.35s ease";
+        document.addEventListener("DOMContentLoaded", () => {
 
-        function activarSegunHora() {
-            const hora = new Date().getHours();
-            return (hora >= 19 || hora < 7);
-        }
+            const btn = document.getElementById("toggleThemeBtn");
 
-        let darkGuardado = localStorage.getItem("darkMode");
-        let activarDark = false;
+            const guardado = localStorage.getItem("darkMode");
+            const activar =
+                guardado === null
+                    ? (new Date().getHours() >= 19 || new Date().getHours() < 7)
+                    : (guardado === "true");
 
-        if (darkGuardado === null) {
-            activarDark = activarSegunHora();
-            localStorage.setItem("darkMode", activarDark);
-        } else {
-            activarDark = (darkGuardado === "true");
-        }
+            if (activar) {
+                document.body.classList.add("dark");
+                btn.textContent = "☀️ Modo claro";
+            }
 
-        if (activarDark) {
-            document.body.classList.add("dark");
-            if (btn) btn.textContent = "☀️ Modo claro";
-        } else {
-            if (btn) btn.textContent = "🌙 Modo oscuro";
-        }
-
-        if (btn) btn.addEventListener("click", () => {
-            document.body.classList.toggle("dark");
-            const dark = document.body.classList.contains("dark");
-            localStorage.setItem("darkMode", dark);
-            btn.textContent = dark ? "☀️ Modo claro" : "🌙 Modo oscuro";
-            // emitir evento para que charts permitan recolor (si implementás)
-            document.dispatchEvent(new Event('themeChanged'));
+            btn.addEventListener("click", () => {
+                document.body.classList.toggle("dark");
+                const dark = document.body.classList.contains("dark");
+                localStorage.setItem("darkMode", dark);
+                btn.textContent = dark ? "☀️ Modo claro" : "🌙 Modo oscuro";
+            });
         });
-    });
     </script>
 
+    <!-- ==========================================
+                 SCRIPT: MODAL GUÍA
+    ============================================ -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const abrir = document.getElementById("abrirGuiaBtn");
+            const cerrar = document.getElementById("modalGuiaClose");
+            const modal = document.getElementById("modalGuia");
+
+            function abrirModal() {
+                modal.style.display = "flex";
+                modal.setAttribute("aria-hidden", "false");
+                document.documentElement.style.overflow = "hidden"; // bloquear scroll
+            }
+
+            function cerrarModal() {
+                modal.style.display = "none";
+                modal.setAttribute("aria-hidden", "true");
+                document.documentElement.style.overflow = ""; // restaurar scroll
+            }
+
+            abrir.addEventListener("click", abrirModal);
+            cerrar.addEventListener("click", cerrarModal);
+
+            modal.addEventListener("click", (ev) => {
+                if (ev.target === modal) cerrarModal();
+            });
+
+            // Cerrar con ESC
+            document.addEventListener("keydown", (ev) => {
+                if (ev.key === "Escape") cerrarModal();
+            });
+        });
+    </script>
+
+    <!-- Sistema adicional -->
     <script type="module" src="app-poo.js"></script>
 </body>
 </html>
