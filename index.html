@@ -38,24 +38,35 @@
     <section id="formularioNuevoProducto" class="panel-form">
         <h3>Crear nuevo producto</h3>
         <label>Nombre:
-            <input id="nombreInput" type="text">
+            <input id="nombreInput" type="text" placeholder="(Nombre del producto)">
         </label>
         <label>Precio costo:
-            <input id="precioCostoInput" type="number" step="0.01">
+            <input id="precioCostoInput" type="number" step="0.01" placeholder=" (Precio de costo)">
         </label>
         <label>Precio venta:
-            <input id="precioVentaInput" type="number" step="0.01">
+            <input id="precioVentaInput" type="number" step="0.01" placeholder=" (Precio al público)">
         </label>
         <label>Categoría:
             <select id="categoriaNueva"></select>
         </label>
         <label>Agregar categoría:
-            <input id="categoriaAgregar" type="text">
+            <input id="categoriaAgregar" type="text" placeholder="Nueva categoría + Agregar →">
             <button id="btnAgregarCategoria">Agregar</button>
         </label>
         <label>Stock inicial:
-            <input id="stockInput" type="number">
+            <input id="stockInput" type="number" placeholder="Cantidad inicial">
         </label>
+
+        <label>Mínimo deseado:
+            <input type="number" id="minimoDeseado" placeholder="Cantidad mínima deseada">
+        </label>
+        <!-- <label>Es perecedero:
+            <input id="perecederoInput" type="checkbox">
+        </label>
+        <label>Días hasta vencimiento:
+            <input id="diasVencimientoInput" type="number">
+        </label> -->
+
         <button id="btnCrearProducto">Crear producto</button>
     </section>
 
