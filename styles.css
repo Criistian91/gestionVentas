@@ -232,7 +232,7 @@ body.dark .login-container {
   border: 1px solid #333;
 }
 
-/* Para impresión: mejorar legibilidad del PDF si exportás secciones HTML */
+/* Para impresión: mejorar legibilidad del PDF si se exporta secciones HTML */
 @media print {
   body { background: #fff !important; color: #000 !important; }
   .no-print { display: none !important; }
@@ -379,4 +379,85 @@ body.dark .alerta-verde {
     background: #003b1a !important;
     border-color: #7dd38d !important;
     color: #b4ffdb !important;
+}
+
+/* --- Modal guía --- */
+.modal-guia {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-guia.oculto {
+    display: none;
+}
+
+.modal-guia-contenido {
+    background: white;
+    padding: 25px;
+    width: 80%;
+    max-width: 700px;
+    max-height: 85vh;
+    overflow-y: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.25);
+}
+
+body.dark .modal-guia-contenido {
+    background: #1f1f1f;
+    color: #eee;
+}
+
+.modal-guia pre {
+    white-space: pre-wrap;
+    font-family: inherit;
+}
+
+/* Modal general */
+.modal {
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+/* Cuando está visible */
+.modal[aria-hidden="false"] {
+    display: flex;
+}
+
+/* Contenedor de la guía con scroll interno */
+.modal-content {
+    background: #ffffff;
+    width: 85%;
+    max-width: 800px;
+    max-height: 85vh;       /* ESTA LÍNEA CREA EL LÍMITE */
+    overflow-y: auto;       /* ESTE ES EL SCROLL */
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.25);
+    position: relative;
+}
+
+/* El texto interno deja de romper el scroll */
+.modal-body pre {
+    white-space: pre-wrap;  /* Permite que el texto haga salto de línea */
+    overflow-wrap: break-word;
+    font-family: inherit;
+    font-size: 0.92rem;
+    line-height: 1.45;
 }
