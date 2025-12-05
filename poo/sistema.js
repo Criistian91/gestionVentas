@@ -1,6 +1,9 @@
 // poo/sistema.js
+// Clase principal que orquesta el sistema de panificados
+// Importa los modelos necesarios y maneja la interacción con el usuario y la lógica de negocio
 import { Producto, Inventario, UsuarioSesion, Turnos, Estadisticas, Exportador } from './modelos.js';
 
+// Clase principal del sistema de panificados
 export class SistemaPanificados {
     constructor() {
         this.sesion = new UsuarioSesion();
@@ -18,6 +21,7 @@ export class SistemaPanificados {
         this.categoriaSeleccionada = "";
     }
 
+    // Inicializa el sistema y configura eventos
     iniciarSistema() {
         this.configurarEventosUI();
 
@@ -36,13 +40,15 @@ export class SistemaPanificados {
         } catch (e) {
             console.warn("Error cierre diario:", e);
         }
-
+        
+        // Cargar productos y categorías en la interfaz
         this.cargarProductosEnPantalla();
         this.actualizarCategorias();
         this.cargarHorarios();
         this.mostrarAlertasDeStock(); // mostrar alertas al iniciar
     }
 
+    // Configura los eventos de la interfaz de usuario
     configurarEventosUI() {
         const toggleBtn = document.getElementById("togglePreciosBtn");
         if (toggleBtn) toggleBtn.addEventListener("click", () => {
@@ -57,15 +63,19 @@ export class SistemaPanificados {
             });
         }
 
+        // Botones para agregar producto
         const addBtn = document.getElementById("addStockBtn") || document.getElementById("crearProductoBtn");
         if (addBtn) addBtn.addEventListener("click", () => this.mostrarModalNuevoProducto());
 
+        // Crear producto desde formulario
         const crearBtn = document.getElementById("btnCrearProducto");
         if (crearBtn) crearBtn.addEventListener("click", (e) => { e.preventDefault(); this.crearProductoDesdeFormulario(); });
 
+        // Agregar categoría desde input
         const btnAgregarCat = document.getElementById("btnAgregarCategoria");
         if (btnAgregarCat) btnAgregarCat.addEventListener("click", (e) => { e.preventDefault(); this.agregarCategoriaDesdeInput(); });
 
+        // Cierre del día
         const cierreBtn = document.getElementById("cierreDiaBtn");
         if (cierreBtn) cierreBtn.addEventListener("click", () => {
             if (confirm("¿Deseás cerrar el día y archivar las ventas diarias?")) {
@@ -73,6 +83,7 @@ export class SistemaPanificados {
             }
         });
 
+        // Evitar submit con Enter en formulario
         const form = document.getElementById("formularioNuevoProducto");
         if (form) {
             form.addEventListener("keydown", (ev) => {
@@ -85,7 +96,7 @@ export class SistemaPanificados {
         if (exportPdfBtn) exportPdfBtn.addEventListener("click", () => this.exportarPDFDelDia());
 
     }
-
+    
     cargarProductosEnPantalla() {
         const cont = document.getElementById("productosContainer");
         if (!cont) return;
@@ -125,6 +136,7 @@ export class SistemaPanificados {
         this.mostrarAlertasDeStock();
     }
 
+    // Crear select dinámico de categorías
     crearSelectCategorias(productos) {
         let select = document.getElementById("selectCategorias");
         if (!select) {
@@ -142,6 +154,7 @@ export class SistemaPanificados {
         if (select) select.addEventListener("change", () => { this.categoriaSeleccionada = select.value; this.cargarProductosEnPantalla(); });
     }
 
+    // Actualiza las categorías en el formulario y el filtro
     actualizarCategorias() {
         const productos = this.inventario.obtenerTodos().map(p => Object.assign(new Producto(), p));
         const categorias = [...new Set(productos.map(p => p.categoria).filter(Boolean))];
@@ -157,7 +170,7 @@ export class SistemaPanificados {
             selectVista.value = this.categoriaSeleccionada || "";
         }
     }
-
+    
     mostrarModalNuevoProducto() {
         const form = document.getElementById("formularioNuevoProducto");
         if (!form) { console.error("No se encontró form"); return; }
@@ -165,7 +178,7 @@ export class SistemaPanificados {
         form.style.display = form.style.display === "block" ? "none" : "block";
         if (form.style.display === "block") { const nombre = document.getElementById("nombreInput"); if (nombre) nombre.focus(); form.scrollIntoView({ behavior: "smooth" }); }
     }
-
+    
     agregarCategoriaDesdeInput() {
         const input = document.getElementById("categoriaAgregar");
         const select = document.getElementById("categoriaNueva");
@@ -290,6 +303,7 @@ export class SistemaPanificados {
         });
     }
 
+    // ---------- GESTIÓN DE VENTAS ----------
     registrarVenta(id) {
         const prod = this.inventario.buscarPorId(id);
         if (!prod || prod.stock <= 0) return;
@@ -319,6 +333,7 @@ export class SistemaPanificados {
         }
     }
 
+    // Devolver producto vendido
     devolverProducto(id) {
         const prod = this.inventario.buscarPorId(id);
         if (!prod || prod.vendido <= 0) return;
@@ -347,6 +362,7 @@ export class SistemaPanificados {
         }
     }
 
+    // Sumar stock a un producto
     sumarStock(id) {
         const cantidad = parseInt(prompt("¿Cuántas unidades agregar?"), 10);
         if (cantidad > 0) {
@@ -434,6 +450,7 @@ export class SistemaPanificados {
         cont.appendChild(ul);
     }
 
+    // Cargar horarios de turnos en formulario
     cargarHorarios() {
         const cfg = this.turnos.config;
         try {
@@ -444,7 +461,7 @@ export class SistemaPanificados {
         } catch (e) { /* no hay campos */ }
     }
 
-
+    // Cierre del día
     cierreDelDia() {
         try {
             const ok = this.estadisticas.cerrarDia();
