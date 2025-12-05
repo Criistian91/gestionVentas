@@ -1,7 +1,7 @@
 # 🥐 Sistema de Gestión de Panificados  
 **Aplicación Web para Control de Stock, Ventas y Estadísticas – Proyecto POO**
 
-Este proyecto es un **sistema completo de gestión de inventario y ventas**, desarrollado como trabajo académico para la materia *Programación Orientada a Objetos*.  
+Este proyecto es un **sistema completo de gestión de inventario y ventas**, desarrollado para uso personal y como trabajo académico para la materia *Programación Orientada a Objetos*.  
 Está pensado para el uso personal en la venta diaria de panificados, pero es totalmente **adaptable a cualquier rubro** que maneje productos físicos, compras, ventas y control de stock.
 
 ---
