@@ -23,18 +23,22 @@ export class Producto {
         this.minimoDeseado = Number(minimoDeseado) || 0;
     }
 
+    // Ganancia por unidad = precio de venta - precio de costo
     calcularGananciaUnidad() {
         return (this.precioVenta || 0) - (this.precioCosto || 0);
     }
 
+    // Ganancia total = unidades vendidas * ganancia por unidad
     calcularGananciaTotal() {
         return (this.vendido || 0) * this.calcularGananciaUnidad();
     }
 
+    // Ingreso esperado = stock actual * precio de venta
     calcularIngresoEsperado() {
         return (this.stock || 0) * (this.precioVenta || 0);
     }
 
+    // Disminuye el stock en la cantidad indicada (por defecto 1).
     disminuirStock(cantidad = 1) {
         cantidad = Number(cantidad) || 1;
         if ((this.stock || 0) < cantidad) return false;
@@ -43,6 +47,7 @@ export class Producto {
         return true;
     }
 
+    // Aumenta el stock en la cantidad indicada (por defecto 1).
     aumentarStock(cantidad = 1) {
         cantidad = Number(cantidad) || 0;
         this.stock = (this.stock || 0) + cantidad;
@@ -53,6 +58,7 @@ export class Producto {
         return this.disminuirStock(cantidad);
     }
 
+    // Devuelve una venta (aumenta stock, disminuye vendido).
     devolverVenta(cantidad = 1) {
         cantidad = Number(cantidad) || 1;
         // no se puede devolver ventas que ya estén bloqueadas (de días cerrados)
@@ -79,6 +85,7 @@ export class Inventario {
         this.productos = this.cargar();
     }
 
+    // cargar inventario desde localStorage
     cargar() {
         try {
             const raw = JSON.parse(localStorage.getItem(this.clave) || "[]");
@@ -90,6 +97,7 @@ export class Inventario {
         }
     }
 
+    // guardar inventario en localStorage
     guardar() {
         try {
             localStorage.setItem(this.clave, JSON.stringify(this.productos));
@@ -98,6 +106,7 @@ export class Inventario {
         }
     }
 
+    // obtener todos los productos (instanciados)
     obtenerTodos() {
         // devolver copias (instanciadas)
         return this.productos.map(p => Object.assign(new Producto(), p));
@@ -144,6 +153,7 @@ export class Inventario {
         return false;
     }
 
+    // Devuelve una venta (aumenta stock, disminuye vendido).
     devolverVenta(id, cantidad = 1) {
         const prod = this.buscarPorId(id);
         if (!prod) return false;
@@ -187,6 +197,7 @@ export class Inventario {
         return { costoTotal, ventaEsperada, ingresoReal, gananciaReal };
     }
 
+    // determina si un producto tiene stock bajo según su mínimo deseado
     tieneStockBajo(p) {
         if (!p) return false;
         return Number(p.minimoDeseado || 0) > 0 && Number(p.stock || 0) <= Number(p.minimoDeseado || 0);
@@ -240,11 +251,13 @@ export class UsuarioSesion {
         location.href = "login.html";
     }
 
+    //
     estaLogueado() {
         this.usuarioActivo = localStorage.getItem("usuarioActivo") || null;
         return this.usuarioActivo !== null;
     }
 
+    // registrar actividad del usuario (actualiza timestamp)
     registrarActividad() {
         localStorage.setItem(this._claveUltimaActividad, String(Date.now()));
     }
@@ -254,6 +267,7 @@ export class UsuarioSesion {
         return v ? parseInt(v, 10) : null;
     }
 
+    // iniciar monitor de inactividad (en minutos)
     iniciarMonitor(inactividadMinutos = 5, onExpirar = null) {
         if (this._monitorId) return;
         const actualizar = () => this.registrarActividad();
@@ -274,6 +288,7 @@ export class UsuarioSesion {
         }, intervalo);
     }
 
+    // detener monitor de inactividad
     detenerMonitor() {
         if (this._monitorId) clearInterval(this._monitorId);
         this._monitorId = null;
@@ -286,6 +301,7 @@ export class UsuarioSesion {
         return JSON.parse(localStorage.getItem(this._usuariosKey) || "[]");
     }
 
+    // crea un nuevo usuario
     crearUsuario({usuario, password, rol = "vendedor", nombre = ""}) {
         if (!usuario || !password) throw new Error("Usuario y contraseña requeridos");
         const usuarios = this.obtenerUsuarios();
@@ -387,12 +403,14 @@ export class Estadisticas {
         return new Date().toISOString().slice(0,10);
     }
 
+    // devuelve la fecha siguiente a la dada (o a hoy si no se pasa)
     _fechaSiguienteStr(dateStr = null) {
         const d = dateStr ? new Date(dateStr) : new Date();
         d.setDate(d.getDate() + 1);
         return this._fechaStrFromDate(d);
     }
 
+    // verifica si la fecha dada (o hoy) ya fue cerrada
     estaFechaCerrada(fechaStr = null) {
         try {
             const fecha = fechaStr || this._fechaHoyStr();
@@ -425,6 +443,7 @@ export class Estadisticas {
         }
     }
 
+    // crea un registro diario base (vacío) para la fecha dada (o hoy)
     _crearRegistroDiarioBase(fechaStr = null) {
         const fecha = fechaStr || this._fechaHoyStr();
         return {
@@ -434,6 +453,7 @@ export class Estadisticas {
         };
     }
 
+    // guarda el registro diario en localStorage
     guardarRegistroDiario(registro, fechaStr = null) {
         // fechaStr tiene precedencia; si no viene usamos registro.fecha o la fecha de hoy
         const fecha = fechaStr || (registro && registro.fecha) || this._fechaHoyStr();
@@ -445,6 +465,7 @@ export class Estadisticas {
         }
     }
 
+    // actualiza el registro diario con una venta
     actualizarVentaEnDiario(productoInfo, turno = "mañana") {
         // Actualiza el registro del día actual (respeta fecha_actual_sistema)
         const fecha = this._fechaHoyStr();
@@ -496,6 +517,7 @@ export class Estadisticas {
         this.guardarRegistroDiario(registro, fecha);
     }
 
+    // cierra el día indicado 
     cerrarDia(fechaStr = null) {
         try {
             // si fechaStr fue pasada explícitamente, la usamos; si no, usamos la fecha "de hoy" controlada
@@ -598,6 +620,7 @@ export class Estadisticas {
         }
     }
 
+    // obtiene todos los registros históricos
     obtenerRegistros() {
         const pref = this.prefijoHist;
         const out = [];
@@ -615,6 +638,7 @@ export class Estadisticas {
         return out;
     }
 
+    // calcula promedios diarios de ventas por producto
     calcularPromedios() {
         const registrosHistoricos = this.obtenerRegistros();
         const registroDiario = this.obtenerRegistroDiario();
@@ -650,6 +674,7 @@ export class Estadisticas {
         return resultado;
     }
 
+    // calcula totales del día actual
     calcularTotalesDelDia() {
         const registro = this.obtenerRegistroDiario();
         if (!registro) return { costoVendido:0, ingresoReal:0, gananciaReal:0, registro: null };
@@ -666,6 +691,7 @@ export class Estadisticas {
         return { costoVendido, ingresoReal, gananciaReal, registro };
     }
 
+    // verifica si es momento de hacer un cierre automático
     verificarCierreAutomatico(cutoffHour = 23, cutoffMinute = 59) {
         try {
             const ultima = localStorage.getItem(this._claveUltimaFechaCierre);
@@ -689,6 +715,7 @@ export class Estadisticas {
         }
     }
 
+    // programa el cierre diario automático a la hora indicada 23.59 por defecto
     programarCierreDiario(cutoffHour = 23, cutoffMinute = 59) {
         try {
             if (this._cierreTimer) { clearTimeout(this._cierreTimer); this._cierreTimer = null; }
@@ -711,6 +738,7 @@ export class Estadisticas {
         }
     }
 
+    // vacía todos los registros históricos
     vaciarHistoricos() {
         const pref = this.prefijoHist;
         const toRemove = [];
@@ -731,6 +759,7 @@ export class Exportador {
         this.pref = `registro_${this.usuario}_`;
     }
 
+    // obtiene todos los registros históricos para exportar
     obtenerTodos() {
         const out = [];
         for (let i = 0; i < localStorage.length; i++) {
@@ -742,6 +771,7 @@ export class Exportador {
         return out;
     }
 
+    // vacía todos los registros históricos
     vaciar() {
         const keys = [];
         for (let i = 0; i < localStorage.length; i++) {
