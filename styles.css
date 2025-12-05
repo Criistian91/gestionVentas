@@ -64,6 +64,11 @@ button.danger:hover {
   background-color: #c9302c !important;
 }
 
+.logo-app {
+    height: 70px;
+    margin-right: 15px;
+}
+
 /* ============================================================
    TARJETAS / SECCIONES
    ============================================================ */
