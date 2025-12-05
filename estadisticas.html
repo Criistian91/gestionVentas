@@ -13,7 +13,6 @@
   <!-- jsPDF (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-  <!-- NOTA: El módulo poo/estadisticas.js se carga al final del body (type="module") -->
 </head>
 
 <body>
@@ -313,14 +312,10 @@
   });
   </script>
 
-  <!-- CARGA DEL MÓDULO PRINCIPAL (estadísticas) -->
-  <script type="module" src="poo/estadisticas.js"></script>
-
   <!-- ============================
-        ESTILOS MÍNIMOS PARA MODAL (si no están en styles.css)
+        ESTILOS MÍNIMOS PARA MODAL 
        ============================ -->
   <style>
-    /* solo estilos mínimos por si styles.css no contiene modal aún */
     .modal {
       display: none;
       position: fixed;
@@ -356,6 +351,7 @@
     .modal-body { font-size: 14px; line-height: 1.4; }
     body.dark .modal .modal-content { background: #111; color: #eee; }
   </style>
+  <script type="module" src="poo/estadisticas.js"></script>
 
 </body>
 </html>
